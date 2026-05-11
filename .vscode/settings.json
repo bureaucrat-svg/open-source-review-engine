@@ -1,0 +1,14 @@
+{
+  // Tailwind v4 uses @theme, @source, etc. — disable the built-in CSS linter
+  // which doesn't know about these at-rules and reports false "Unknown at rule" errors.
+  "css.validate": false,
+  "scss.validate": false,
+
+  // Use the Tailwind CSS IntelliSense extension for CSS validation instead.
+  "editor.quickSuggestions": {
+    "strings": "on"
+  },
+
+  // Tell TypeScript where to find path aliases (mirrors tsconfig.json paths)
+  "typescript.preferences.importModuleSpecifier": "non-relative"
+}
