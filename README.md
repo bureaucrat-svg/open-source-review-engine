@@ -1,36 +1,76 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Open Source Review Engine — Command Center
 
-## Getting Started
+> A bulletproof, zero-trust E-commerce Review CRM built with Next.js 16, Supabase, and Tailwind CSS 4.
 
-First, run the development server:
+This project is a high-performance, secure review management system designed for modern e-commerce applications. It features a robust security layer, automated moderation gates, and a premium admin dashboard.
+
+## ✨ Key Features
+
+### 🛡️ Security & Logic (Hacker-Mindset)
+- **Zero-Trust Firewall**: Strict middleware-level origin validation. Only whitelisted domains can hit the API.
+- **Dual Rate Limiting**: Prevents spam by limiting submissions to 3 reviews per hour per IP **and** per email address.
+- **XSS Prevention**: Strict Zod schema validation with automatic HTML tag stripping from reviewer names and comments.
+- **Secure Image Uploads**: Renames files to UUIDs on upload to prevent directory traversal and metadata leakage. Signed URLs for secure viewing.
+- **Supabase RLS**: Every database transaction is governed by Row Level Security—unauthorized users see nothing.
+
+### 📊 Admin Dashboard (Command Center)
+- **Premium Aesthetics**: A stunning dark-mode UI using the `Royal Orchid` and `Amethyst` palette with glassmorphism effects.
+- **TanStack Table**: Advanced review manager with bulk actions (Approve, Reject, Delete), status filtering, and pagination.
+- **Review Gatekeeper**: Toggle auto-approve settings directly from the dashboard.
+- **Real-time Metrics**: Overview of pending, approved, and rejected reviews.
+
+### 📖 API Documentation
+- **Scalar UI**: Interactive API documentation served at `/api-docs`, dynamically generated from Zod schemas.
+
+## 🚀 Tech Stack
+
+- **Framework**: [Next.js 16](https://nextjs.org) (App Router)
+- **Database & Auth**: [Supabase](https://supabase.com)
+- **Styling**: [Tailwind CSS 4](https://tailwindcss.com)
+- **Tables**: [TanStack Table v8](https://tanstack.com/table)
+- **Validation**: [Zod](https://zod.dev)
+- **API Docs**: [Scalar](https://scalar.com)
+
+## 🛠️ Getting Started
+
+### 1. Prerequisites
+- Node.js 20.9+
+- A Supabase project
+
+### 2. Environment Setup
+Copy the example environment file and fill in your Supabase credentials:
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+cp .env.local.example .env.local
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Required variables:
+- `NEXT_PUBLIC_SUPABASE_URL`
+- `NEXT_PUBLIC_SUPABASE_ANON_KEY`
+- `SUPABASE_SERVICE_ROLE_KEY`
+- `ALLOWED_ORIGINS` (comma-separated domains)
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+### 3. Database Migration
+Run the initial schema in your Supabase SQL Editor:
+The schema can be found in `supabase/migrations/001_initial_schema.sql`.
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+### 4. Installation
+```bash
+npm install
+```
 
-## Learn More
+### 5. Development Server
+```bash
+npm run dev
+```
+Open [http://localhost:3000](http://localhost:3000) to see the landing page.
 
-To learn more about Next.js, take a look at the following resources:
+## 🔒 Production Hardening
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+- Ensure `ALLOWED_ORIGINS` in `.env.local` is set to your production frontend domain.
+- The `SUPABASE_SERVICE_ROLE_KEY` should **never** be exposed to the client. It is used only in server-side security utilities.
+- Configure your Supabase Storage bucket `review-images` as "Restricted" for maximum privacy.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## 📄 License
 
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+This project is open-source and available under the MIT License.
